@@ -1,0 +1,29 @@
+SOFTWARE ARCHITECTURE:
+=====================
+(see also doc/word_count_arch.pdf)
+
+10) main.c
+Description: launch N threads. 
+Connection: Uses 'map_reduce.h'.
+
+20) mr_count_word.c
+Description: implement the core of this application. 
+Connections: uses 'file_access.h', and 'c_cache.h'; and implements
+'map_reduce.h' functions.
+
+30) wc_cache.c
+Description:  cache of words. Count the number of word using a modified hash
+table. 
+Connections: uses 'htable.h' and implements 'wc_cache.h' functions.
+Note: this cache convert all words to lower case.
+
+40) htable.c
+Description: implement a hash table. Elements within buckets are kept ordered.
+Connections: use 'list.h' and implements 'htable.h' functions.
+
+50) file_access.c 
+Description: provide access to file. Two mode are available. The "mmap" mode
+access and the "pread" mode access. 
+Connection: Implements file_access.h functions.
+
+60) config.h: some configuration options

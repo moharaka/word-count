@@ -1,0 +1,31 @@
+Word counting application
+=========================
+
+by Mohamed Lamine Karaoui
+
+COMPILATION:
+-----------
+Enter:
+"make"
+(That's it)
+
+
+USAGE:
+-----
+Once compiled, launch the application by entring:
+"./word_count FILE NBTHREAD"
+FILE: is the file to be parsed
+NBTHREAD: is the number of thread to be used
+
+
+LICENSE:
+-------
+GNU v2.0
+
+Note that htable.[c-h] (I am the author of these files) and list.h (I am not the
+author) are modified from ALMOS (LIP6) kernel.
+
+
+Contacts:
+--------
+mohamed.karaoui@lip6.fr
