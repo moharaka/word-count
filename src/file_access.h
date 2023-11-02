@@ -8,7 +8,7 @@
 /* Initialise file access for worker threads.	*
  * Should be called by main thread. 		*
  * return 0 success; else error.		*/
-int fa_init(char *file, uint32_t nb_thread, off_t *fsz);
+int fa_init(char *file, uint32_t nb_thread, off_t * fsz);
 
 /* destroy fa_init allocated ressource */
 int fa_destroy();

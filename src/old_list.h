@@ -35,7 +35,6 @@
 #define NULL (void *) 0
 #endif
 
-
 #ifndef offsetof
 #define offsetof(type, member) ((unsigned long) & ((type *)0)->member)
 #endif
@@ -55,7 +54,7 @@
 
 #define list_assert_dead(_list_ptr)
 #define slist_assert_dead(_list_ptr)
-#endif	/* ALMOS_LIST_DEBUG */
+#endif                          /* ALMOS_LIST_DEBUG */
 
 #define LIST_ROOT_INITIALIZER(name) { &(name), &(name) }
 
@@ -68,9 +67,9 @@
 /*
  * Double circular linked list definition
  */
-struct list_entry{
-	struct list_entry *next;
-	struct list_entry *pred;
+struct list_entry {
+    struct list_entry *next;
+    struct list_entry *pred;
 };
 
 /* Simple circular linked list definition
@@ -79,10 +78,9 @@ struct list_entry{
  * and macro from list_entry (Double circular
  * linked list) see commentes of each one
  */
-struct slist_entry{
-	struct slist_entry *next;
+struct slist_entry {
+    struct slist_entry *next;
 };
-
 
 /*
  * Can be used, and should be used for both
@@ -101,32 +99,30 @@ struct slist_entry{
 /*
  * To be used only with list_entry data structure
  */
-static inline struct list_entry* list_next(struct list_entry *root, struct list_entry *current)
+static inline struct list_entry *list_next(struct list_entry *root, struct list_entry *current)
 {
-	if((root == root->next) || (current->next == root))
-		return NULL;
-  
-	return current->next;
+    if ((root == root->next) || (current->next == root))
+        return NULL;
+
+    return current->next;
 }
 
 /*
  * To be used only with list_entry data structure
  */
-static inline struct list_entry* list_pred(struct list_entry *root, struct list_entry *current)
+static inline struct list_entry *list_pred(struct list_entry *root, struct list_entry *current)
 {
-	if((root == root->next) || (current->pred == root))
-		return NULL;
-  
-	return current->pred;
-}
+    if ((root == root->next) || (current->pred == root))
+        return NULL;
 
+    return current->pred;
+}
 
 /*
  * To be used only with list_entry data structure
  */
 #define list_last(root_ptr, type, member)		\
 	list_element((root_ptr)->pred,type,member)
-
 
 /*
  * To be used with list_entry data structure
@@ -144,7 +140,7 @@ struct list_entry *__ptr;						\
 for(iter = (root_ptr)->next, __ptr = (struct list_entry *)(iter)->next; \
 		iter != (root_ptr);					\
 		iter = (typeof((iter)))__ptr, __ptr = (struct list_entry *)iter->next)
-	
+
 //for(iter = (root_ptr)->next; iter != (root_ptr);  iter = iter->next)
 
 #if 0
@@ -175,8 +171,8 @@ for(iter = (root_ptr)->next, __ptr = (struct list_entry *)(iter)->next; \
  */
 static inline void list_root_init(struct list_entry *root)
 {
-	root->next = root;
-	root->pred = root;
+    root->next = root;
+    root->pred = root;
 }
 
 /*
@@ -184,8 +180,8 @@ static inline void list_root_init(struct list_entry *root)
  */
 static inline void list_entry_init(struct list_entry *entry)
 {
-	entry->next = NULL;
-	entry->pred = NULL;
+    entry->next = NULL;
+    entry->pred = NULL;
 }
 
 /*
@@ -193,17 +189,17 @@ static inline void list_entry_init(struct list_entry *entry)
  */
 static inline void list_add(struct list_entry *root, struct list_entry *entry)
 {
-	struct list_entry *pred_entry;
-	struct list_entry *next_entry;
-  
-	pred_entry = root;
-	next_entry = root->next;
+    struct list_entry *pred_entry;
+    struct list_entry *next_entry;
 
-	entry->next = next_entry;
-	entry->pred = pred_entry;
-  
-	pred_entry->next = entry;
-	next_entry->pred = entry;
+    pred_entry = root;
+    next_entry = root->next;
+
+    entry->next = next_entry;
+    entry->pred = pred_entry;
+
+    pred_entry->next = entry;
+    next_entry->pred = entry;
 }
 
 /*
@@ -243,18 +239,18 @@ static inline void list_add(struct list_entry *root, struct list_entry *entry)
  */
 static inline void list_unlink(struct list_entry *entry)
 {
-	struct list_entry *pred_entry;
-	struct list_entry *next_entry;
+    struct list_entry *pred_entry;
+    struct list_entry *next_entry;
 
-	pred_entry = entry->pred;
-	next_entry = entry->next;
+    pred_entry = entry->pred;
+    next_entry = entry->next;
 
-	pred_entry->next = entry->next;
-	next_entry->pred = entry->pred;
+    pred_entry->next = entry->next;
+    next_entry->pred = entry->pred;
 
 #if ALMOS_LIST_DEBUG
-	entry->next = (struct list_entry *)LIST_NEXT_DEAD;
-	entry->pred = (struct list_entry *)LIST_PRED_DEAD;
+    entry->next = (struct list_entry *)LIST_NEXT_DEAD;
+    entry->pred = (struct list_entry *)LIST_PRED_DEAD;
 #endif
 }
 
@@ -263,17 +259,17 @@ static inline void list_unlink(struct list_entry *entry)
  */
 static inline void list_replace(struct list_entry *current, struct list_entry *new)
 {
-	struct list_entry *pred_entry;
-	struct list_entry *next_entry;
+    struct list_entry *pred_entry;
+    struct list_entry *next_entry;
 
-	pred_entry = current->pred;
-	next_entry = current->next;
+    pred_entry = current->pred;
+    next_entry = current->next;
 
-	new->next = next_entry;
-	new->pred = pred_entry;
+    new->next = next_entry;
+    new->pred = pred_entry;
 
-	pred_entry->next = new;
-	next_entry->pred = new;
+    pred_entry->next = new;
+    next_entry->pred = new;
 }
 
 ///////////////////////////////////////////////////
@@ -283,14 +279,11 @@ static inline void list_replace(struct list_entry *current, struct list_entry *n
 #define slist_root_init(_root)			\
 	(_root)->next = (_root)
 
-
 #define slist_entry_init(_entry)		\
 	(_entry)->next = NULL
 
-
 #define list_head(_root, _type, _member)		\
 	list_element((_root)->next,_type,_member)
-
 
 #define list_push(_root,_entry)			\
 	do{					\
@@ -301,22 +294,22 @@ static inline void list_replace(struct list_entry *current, struct list_entry *n
 #define slist_empty(root) (root == (root)->next)
 
 /* list must have at least one element */
-static inline struct slist_entry* list_pop(struct slist_entry *root)
+static inline struct slist_entry *list_pop(struct slist_entry *root)
 {
-	struct slist_entry *entry;
-  
-	if(slist_empty(root))
-		return NULL;
+    struct slist_entry *entry;
 
-	//get first elem
-	entry = root->next;
-	//unlink it
-	root->next = entry->next;
+    if (slist_empty(root))
+        return NULL;
+
+    //get first elem
+    entry = root->next;
+    //unlink it
+    root->next = entry->next;
 
 #if ALMOS_LIST_DEBUG
-	entry->next = (struct slist_entry *)LIST_SNEXT_DEAD;
+    entry->next = (struct slist_entry *)LIST_SNEXT_DEAD;
 #endif
 
-	return entry;
+    return entry;
 }
-#endif	/* _ALMOS_LIST_H_ */
+#endif                          /* _ALMOS_LIST_H_ */

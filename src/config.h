@@ -19,7 +19,6 @@
 #define USE_PREAD 1
 #define POPULATE_MMAP 1
 
-
 /* Debug config */
 #if 0
 #define dmsg printf
