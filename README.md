@@ -1,5 +1,5 @@
 # Word counting application
-by Mohamed Lamine Karaoui
+by Mohamed Karaoui
 
 This application counts the number of words in a given file using multiple threads.
 
@@ -33,4 +33,4 @@ This application is licensed under GNU v2.0. Note that the `list.h` file is modi
 
 ## Contacts
 
-For any questions or feedback, please contact me at mohamed.karaoui@lip6.fr.
+For any questions or feedback, please contact me at mohamed.karaoui.freelance@gmail.com
